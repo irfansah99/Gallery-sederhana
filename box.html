@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <style>  
+        .head {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 10px;
+            padding: 10px;
+            min-width: 400px;
+        }
+
+        #search {
+            width:80%;
+            max-width: 950px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 400px;
+            max-width: 350px;
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        img:hover {
+            transform: scale(1.05);
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="head">
+        <input type="text" id="search" placeholder="Search by alt...">
+        <button type="button" onclick="filterImages()">Search</button>
+        <select id="select" onchange="filterImages()">
+            <option value="all">All</option>
+            <option value="anime">Anime</option>
+            <option value="real">Real</option>
+        </select>
+    </div>
+
+    <div class="gallery">
+        <img src="https://i.pinimg.com/736x/06/3a/0c/063a0c801128bb6b6fcc48d653466973.jpg" alt="Mizuhara" class="anime img-fluid w-100 rounded shadow">
+        <img src="https://i.pinimg.com/236x/ac/55/c5/ac55c5cd41eacdd853f6793b99e6b1b5.jpg" alt="Mizuhara" class="anime img-fluid w-100 rounded shadow">
+        <img src="https://i.pinimg.com/236x/9c/cb/42/9ccb42792644fe75796a9110506e0040.jpg" alt="Mizuhara" class="anime img-fluid w-100 rounded shadow">
+        <img src="https://i.pinimg.com/474x/da/a8/50/daa8500f07fe4d6cdc378e4ebd9ca5f9.jpg" alt="miku" class="real img-fluid w-100 rounded shadow">
+        <img src="https://i.pinimg.com/474x/75/93/ee/7593ee50295ed1737cc03ed8ce8a93af.jpg" alt="frieren" class="real img-fluid w-100 rounded shadow">
+        <img src="https://i.pinimg.com/736x/49/81/e8/4981e89cec865e38edc324dcebc0d130.jpg" alt="frieren" class="anime img-fluid w-100 rounded shadow">
+        <img src="https://i.pinimg.com/474x/60/4b/42/604b425af256d9358e3727126f538ad7.jpg" alt="frieren" class="real img-fluid w-100 rounded shadow">
+        <img src="https://i.pinimg.com/236x/1b/9f/21/1b9f2133048abb93c2f07336f44d3567.jpg" alt="miku" class="anime img-fluid w-100 rounded shadow">
+        <img src="https://i.pinimg.com/474x/6b/80/ae/6b80aec67decf2be674bc515f6ff0837.jpg" alt="miku" class="real img-fluid w-100 rounded shadow">
+    </div>
+
+    <script defer>
+        function filterImages() {
+            let searchText = document.getElementById('search').value.toLowerCase();
+            let selectedCategory = document.getElementById('select').value;
+            let images = document.querySelectorAll('.gallery img');
+
+            images.forEach(img => {
+                let altText = img.alt.toLowerCase();
+                let categoryMatch = img.classList.contains(selectedCategory) || selectedCategory === "all";
+                let searchMatch = altText.includes(searchText);
+
+                if (categoryMatch && searchMatch) {
+                    img.classList.remove("hidden");
+                } else {
+                    img.classList.add("hidden");
+                }
+            });
+        }
+    </script>
+  <script src="https://cdn.jsdelivr.net/npm/bs5-lightbox@1.8.3/dist/index.bundle.min.js"></script>
+</body>
+</html>
